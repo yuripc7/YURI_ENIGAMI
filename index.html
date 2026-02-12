@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Board Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        theme: {
+                            bg: 'var(--theme-bg)',
+                            card: 'var(--theme-card)',
+                            orange: '#E86C3F',
+                            cyan: '#00D4FF',
+                            text: 'var(--theme-text)',
+                            textMuted: 'var(--theme-text-muted)',
+                            red: '#EF4444',
+                            green: '#10B981',
+                            divider: 'var(--theme-divider)',
+                            highlight: 'var(--theme-highlight)',
+                            input: 'var(--theme-input)'
+                        }
+                    },
+                    fontFamily: { 
+                        sans: ['"Inter"', 'sans-serif'],
+                        square: ['"Orbitron"', 'sans-serif'] 
+                    },
+                    borderRadius: {
+                        'card': '16px',
+                        'btn': '12px'
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
+                        'glow': '0 0 15px rgba(232, 108, 63, 0.3)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            /* Light Mode Variables */
+            --theme-bg: #F3F4F6;
+            --theme-card: #FFFFFF;
+            --theme-text: #1F2937;
+            --theme-text-muted: #6B7280;
+            --theme-divider: rgba(0, 0, 0, 0.1);
+            --theme-highlight: rgba(0, 0, 0, 0.05);
+            --theme-input: #FFFFFF;
+        }
+
+        .dark {
+            /* Dark Mode Variables */
+            --theme-bg: #1A1A1A;
+            --theme-card: #2A2A2A;
+            --theme-text: #FFFFFF;
+            --theme-text-muted: #B0B0B0;
+            --theme-divider: rgba(255, 255, 255, 0.1);
+            --theme-highlight: rgba(255, 255, 255, 0.05);
+            --theme-input: #1A1A1A;
+        }
+
+        body { 
+            background-color: var(--theme-bg);
+            color: var(--theme-text); 
+            margin: 0; 
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Design System Card Style */
+        .ds-card {
+            background-color: var(--theme-card);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--theme-divider);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .ds-card:hover {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Accent Card Style */
+        .ds-card-accent {
+            background: linear-gradient(135deg, #E86C3F 0%, #D65A2E 100%);
+            border-radius: 16px;
+            box-shadow: 0 10px 20px -5px rgba(232, 108, 63, 0.4);
+            border: none;
+            color: white; /* Always white text on orange cards */
+        }
+        
+        .ds-card-accent .text-theme-textMuted {
+            color: rgba(255,255,255,0.7) !important;
+        }
+
+        .scroller::-webkit-scrollbar { height: 6px; width: 6px; }
+        .scroller::-webkit-scrollbar-track { background: transparent; }
+        .scroller::-webkit-scrollbar-thumb { background: var(--theme-text-muted); border-radius: 10px; opacity: 0.5; }
+        .scroller::-webkit-scrollbar-thumb:hover { background: #E86C3F; }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { 
+                background: white !important; 
+                color: black !important; 
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .ds-card, .ds-card-accent { 
+                background: white !important; 
+                border: 1px solid #ddd !important; 
+                color: black !important; 
+                box-shadow: none !important; 
+                break-inside: avoid;
+            }
+            .text-white { color: black !important; }
+            /* Force reveal of print header */
+            .print\:flex { display: flex !important; }
+            .print\:block { display: block !important; }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
+        .animate-scaleIn { animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
