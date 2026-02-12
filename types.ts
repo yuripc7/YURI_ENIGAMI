@@ -54,6 +54,8 @@ export interface Project {
     name: string;
     logoUrl?: string;
     coverUrl?: string; // New: Project facade/background image
+    gallery?: string[]; // New: Project Gallery Images
+    galleryDescriptions?: Record<number, string>; // Stores text for each gallery image index
     createdAt: string;
     updatedAt: string;
     timelineStart: string;
