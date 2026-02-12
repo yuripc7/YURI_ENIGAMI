@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Board Dashboard</title>
+    <title>ENIGAMI Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,8 +17,9 @@
                         theme: {
                             bg: 'var(--theme-bg)',
                             card: 'var(--theme-card)',
-                            orange: '#E86C3F',
-                            cyan: '#00D4FF',
+                            orange: '#FF6B4A', /* Vibrant Orange from reference */
+                            purple: '#8B5CF6', /* Purple from reference */
+                            cyan: '#2DD4BF',   /* Teal/Cyan from reference */
                             text: 'var(--theme-text)',
                             textMuted: 'var(--theme-text-muted)',
                             red: '#EF4444',
@@ -33,12 +34,14 @@
                         square: ['"Orbitron"', 'sans-serif'] 
                     },
                     borderRadius: {
-                        'card': '16px',
-                        'btn': '12px'
+                        'card': '30px', /* Larger radius for Neuro feel */
+                        'btn': '16px'
                     },
                     boxShadow: {
-                        'soft': '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
-                        'glow': '0 0 15px rgba(232, 108, 63, 0.3)'
+                        'soft': '0 20px 40px -15px rgba(0, 0, 0, 0.1)',
+                        'glow': '0 0 20px rgba(255, 107, 74, 0.3)',
+                        'neuro': '20px 20px 60px #d1d5db, -20px -20px 60px #ffffff',
+                        'neuro-dark': '10px 10px 30px #0b0c10, -10px -10px 30px #1f2833' 
                     }
                 }
             }
@@ -46,92 +49,157 @@
     </script>
     <style>
         :root {
-            /* Light Mode Variables */
-            --theme-bg: #F3F4F6;
+            /* Light Mode / Neuro Theme Variables */
+            --theme-bg: #F0F2F5;
             --theme-card: #FFFFFF;
-            --theme-text: #1F2937;
-            --theme-text-muted: #6B7280;
-            --theme-divider: rgba(0, 0, 0, 0.1);
-            --theme-highlight: rgba(0, 0, 0, 0.05);
-            --theme-input: #FFFFFF;
+            --theme-text: #374151; /* Dark Grey */
+            --theme-text-muted: #9CA3AF; /* Light Grey */
+            --theme-divider: #E5E7EB;
+            --theme-highlight: #F9FAFB;
+            --theme-input: #F3F4F6;
+            --theme-border: #FFFFFF;
         }
 
         .dark {
-            /* Dark Mode Variables */
-            --theme-bg: #1A1A1A;
-            --theme-card: #2A2A2A;
-            --theme-text: #FFFFFF;
-            --theme-text-muted: #B0B0B0;
-            --theme-divider: rgba(255, 255, 255, 0.1);
-            --theme-highlight: rgba(255, 255, 255, 0.05);
-            --theme-input: #1A1A1A;
+            --theme-bg: #0B0C10; /* Deep Dark */
+            --theme-card: #151B24; /* Dark Grey Blue */
+            --theme-text: #E2E8F0; /* Light Grey */
+            --theme-text-muted: #94A3B8;
+            --theme-divider: #2D3748;
+            --theme-highlight: #1F2937;
+            --theme-input: #0B0C10;
+            --theme-border: #2D3748;
         }
 
+        /* Contour Lines Background Pattern */
         body { 
             background-color: var(--theme-bg);
             color: var(--theme-text); 
             margin: 0; 
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.5) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.5) 2px, transparent 2px),
+                linear-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 1px);
+            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dark body {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 2px, transparent 2px),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
         
-        /* Design System Card Style */
+        /* Add a "blob" effect for background ambience */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 74, 0.05) 0%, rgba(255,255,255,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(45, 212, 191, 0.05) 0%, rgba(255,255,255,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Design System Card Style - Neuro/Clean */
         .ds-card {
             background-color: var(--theme-card);
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            border: 1px solid var(--theme-divider);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--theme-border);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .dark .ds-card {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2D3748;
         }
 
         .ds-card:hover {
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Accent Card Style */
+        .dark .ds-card:hover {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Accent Card Style - Gradients from Reference */
         .ds-card-accent {
-            background: linear-gradient(135deg, #E86C3F 0%, #D65A2E 100%);
-            border-radius: 16px;
-            box-shadow: 0 10px 20px -5px rgba(232, 108, 63, 0.4);
+            border-radius: 30px;
+            box-shadow: 0 15px 35px -10px rgba(0,0,0,0.2);
             border: none;
-            color: white; /* Always white text on orange cards */
+            color: white; 
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Gradient 1: Orange/Coral */
+        .gradient-orange {
+            background: linear-gradient(135deg, #FF9966 0%, #FF5E62 100%);
+        }
+        /* Gradient 2: Purple */
+        .gradient-purple {
+            background: linear-gradient(135deg, #A770EF 0%, #CF8BF3 50%, #FDB99B 100%);
+        }
+        /* Gradient 3: Cyan/Teal */
+        .gradient-cyan {
+            background: linear-gradient(135deg, #4AC29A 0%, #BDFFF3 100%);
+            color: #1F2937 !important; /* Dark text for light cyan card */
         }
         
         .ds-card-accent .text-theme-textMuted {
-            color: rgba(255,255,255,0.7) !important;
+            color: rgba(255,255,255,0.8) !important;
+        }
+        .gradient-cyan .text-theme-textMuted {
+            color: rgba(31, 41, 55, 0.6) !important;
+        }
+        .gradient-cyan h1, .gradient-cyan h2, .gradient-cyan span {
+             color: #1F2937 !important;
         }
 
         .scroller::-webkit-scrollbar { height: 6px; width: 6px; }
         .scroller::-webkit-scrollbar-track { background: transparent; }
-        .scroller::-webkit-scrollbar-thumb { background: var(--theme-text-muted); border-radius: 10px; opacity: 0.5; }
-        .scroller::-webkit-scrollbar-thumb:hover { background: #E86C3F; }
+        .scroller::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 10px; }
+        .scroller::-webkit-scrollbar-thumb:hover { background: #D1D5DB; }
+        
+        .dark .scroller::-webkit-scrollbar-thumb { background: #4B5563; }
+        .dark .scroller::-webkit-scrollbar-thumb:hover { background: #6B7280; }
 
         @media print {
             .no-print { display: none !important; }
-            body { 
-                background: white !important; 
-                color: black !important; 
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            .ds-card, .ds-card-accent { 
-                background: white !important; 
-                border: 1px solid #ddd !important; 
-                color: black !important; 
-                box-shadow: none !important; 
-                break-inside: avoid;
-            }
-            .text-white { color: black !important; }
-            /* Force reveal of print header */
-            .print\:flex { display: flex !important; }
-            .print\:block { display: block !important; }
+            body { background: white !important; color: black !important; }
+            .ds-card, .ds-card-accent { box-shadow: none !important; border: 1px solid #eee !important; background: white !important; color: black !important; }
         }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
-        .animate-scaleIn { animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .animate-fadeIn { animation: fadeIn 0.4s ease-out; }
+        .animate-scaleIn { animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        
+        .shadow-neuro { box-shadow: var(--shadow-neuro); }
+        :root { --shadow-neuro: 20px 20px 60px #d1d5db, -20px -20px 60px #ffffff; }
+        .dark { --shadow-neuro: 10px 10px 30px #0b0c10, -10px -10px 30px #1f2833; }
     </style>
 
 <link rel="stylesheet" href="/index.css">
@@ -145,7 +213,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/assets/index-C7krK66w.js"></script>
+  <script type="module" crossorigin src="/assets/index-DG6FwbF2.js"></script>
 </head>
 <body>
     <div id="root"></div>
